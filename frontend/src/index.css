@@ -2,77 +2,90 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Body Styling */
 body {
   margin: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  background-color: #0f172a;
+  color: #000000;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #0f172a;
-  color: #e2e8f0;
-  line-height: 1.6;
 }
 
+/* Universal Styles */
 * {
   box-sizing: border-box;
   transition: all 0.3s ease;
 }
 
+/* Root Variables for Theme Colors */
 :root {
-  --primary-color: #3b82f6;
-  --secondary-color: #8b5cf6;
-  --bg-dark: #0f172a;
-  --text-light: #e2e8f0;
+  --primary-color: #3b82f6; /* Blue */
+  --secondary-color: #8b5cf6; /* Purple */
+  --bg-dark: #0f172a; /* Dark Background */
+  --text-light: #e2e8f0; /* Light Text */
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
 }
-
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
   border-radius: 10px;
 }
 
-/* Selection Styling */
+/* Text Selection Styling */
 ::selection {
   background-color: rgba(59, 130, 246, 0.3);
   color: #ffffff;
 }
 
-/* Input Styling */
+/* Input and Button Styling */
 input, button {
   font-family: 'Inter', sans-serif;
+  outline: none;
 }
 
 /* Animation Keyframes */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes floating {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 /* Global Animation Classes */
 .animate-fade-in {
   animation: fadeIn 0.6s ease-out;
 }
-
 .animate-floating {
   animation: floating 3s ease-in-out infinite;
 }
 
-/* Gradient Text */
+/* Gradient Text Styling */
 .gradient-text {
   background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
   -webkit-background-clip: text;
@@ -85,8 +98,10 @@ input, button {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
+/* Code Block Styling */
 code {
   font-family: 'Fira Code', 'Source Code Pro', Menlo, Monaco, Consolas, 'Courier New', monospace;
   background-color: rgba(255, 255, 255, 0.1);

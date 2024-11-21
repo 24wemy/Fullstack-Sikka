@@ -15,7 +15,7 @@ const Login = () => {
     try {
       const data = await loginUser(username, password);
       localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       setError(err.message);
     }
@@ -24,11 +24,11 @@ const Login = () => {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black flex items-center justify-center overflow-hidden">
       {/* Floating Shapes */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-500 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-float"></div>
-      <div className="absolute bottom-10 right-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-float animation-delay-2000"></div>
+      {/* <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-500 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-float"></div>
+      <div className="absolute bottom-10 right-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-float animation-delay-2000"></div> */}
 
       {/* Login Card */}
-      <div className="relative bg-white bg-opacity-10 backdrop-blur-md p-10 rounded-xl shadow-2xl w-96 transform transition-all duration-300 hover:scale-105">
+      <div className="relative bg-white bg-opacity-10 backdrop-blur-md p-10 rounded-xl shadow-2xl w-96">
         <h2 className="text-4xl font-bold mb-8 text-center text-white tracking-wider">
           Welcome Back
         </h2>

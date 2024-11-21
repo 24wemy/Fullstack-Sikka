@@ -11,11 +11,11 @@ const App = () => {
     <Router>
       <Routes>
         {/* Rute login */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
 
         {/* Rute halaman utama (dashboard) dengan layout */}
         <Route
-          path="/"
+          path="/home"
           element={
             <ProtectedRoute>
               <MainLayout>
@@ -38,7 +38,7 @@ const App = () => {
         />
 
         {/* Redirect ke login jika rute tidak dikenali */}
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );

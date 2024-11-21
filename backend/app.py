@@ -38,7 +38,7 @@ def get_default_profile():
         'user_id': None
     }
 
-@app.route('/login', methods=['POST'])
+@app.route('/', methods=['POST'])
 def login():
     try:
         # Validate incoming data
