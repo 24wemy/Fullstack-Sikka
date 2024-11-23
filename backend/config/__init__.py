@@ -1,0 +1,1 @@
+from .settings import app, logger, SUPABASE_URL, SUPABASE_KEY
