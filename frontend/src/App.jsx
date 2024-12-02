@@ -2,22 +2,22 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/auth/Login';
 import Profile from './components/profile/Profile';
+import AdminDashboard from './components/pages/AdminDashboard'; // New Admin Dashboard
 import ProtectedRoute from './components/ProtectedRoute';
-import MainLayout from './components/MainLayout'; // Layout utama
-import DashboardPage from './components/pages/DashboardPage'; // Halaman Dashboard
+import MainLayout from './components/MainLayout';
+import DashboardPage from './components/pages/DashboardPage';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Rute login */}
         <Route path="/" element={<Login />} />
 
-        {/* Rute halaman utama (dashboard) dengan layout */}
+        {/* User Dashboard */}
         <Route
           path="/home"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={['user']}>
               <MainLayout>
                 <DashboardPage />
               </MainLayout>
@@ -25,11 +25,11 @@ const App = () => {
           }
         />
 
-        {/* Rute profil dengan layout */}
+        {/* Profile Route */}
         <Route
           path="/profile"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={['user']}>
               <MainLayout>
                 <Profile />
               </MainLayout>
@@ -37,7 +37,17 @@ const App = () => {
           }
         />
 
-        {/* Redirect ke login jika rute tidak dikenali */}
+        {/* Admin Dashboard */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+                <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Catch-all Route */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

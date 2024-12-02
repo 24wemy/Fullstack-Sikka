@@ -7,7 +7,6 @@ def init_auth_routes(app):
     @app.route('/', methods=['POST'])
     def login():
         try:
-            # Validate incoming data
             data = request.get_json()
             if not data:
                 return jsonify({'message': 'No input data provided'}), 400
@@ -15,16 +14,14 @@ def init_auth_routes(app):
             username = data.get('username')
             password = data.get('password')
 
-            # Validate username and password
             if not username or not password:
                 return jsonify({'message': 'Username dan Password diperlukan'}), 400
 
             supabase = get_supabase_client()
 
-            # Fetch user from Supabase using username
+            # Fetch user from Supabase including role
             user_response = supabase.table('users').select('*').eq('username', username).execute()
             
-            # Check if user exists
             if not user_response.data:
                 logger.warning(f'Login attempt with non-existent username: {username}')
                 return jsonify({'message': 'Invalid credentials'}), 401
@@ -34,27 +31,35 @@ def init_auth_routes(app):
             # Verify password 
             if password != user_data.get('password'):
                 logger.warning(f'Failed login attempt for username: {username}')
-                return jsonify({'message': 'Invalid credentials'}), 401
+                return jsonify({'message': 'Username dan Password Salah'}), 401
 
             # Retrieve profile data
-            profile_response = supabase.table('profiles').select('*').eq('user_id', user_data['id']).execute()
+            profile_response = supabase.table('profile').select('*').eq('user_id', user_data['id']).execute()
             
             # Use default profile if no profile exists
             profile_data = profile_response.data[0] if profile_response.data else get_default_profile()
             profile_data['user_id'] = user_data['id']
 
-            # Construct user response
-            user_response = {
+            # Construct user response with role
+            user_response_data = {
                 'message': 'Login successful',
                 'user': {
                     'id': user_data['id'],
                     'username': user_data['username'],
+                    'role': user_data['role'],  # Include role in response
                     **{k: profile_data.get(k, 'Belum diisi') for k in get_default_profile().keys() if k != 'user_id'}
                 }
             }
 
-            logger.info(f'Successful login for username: {username}')
-            return jsonify(user_response), 200
+            # Check if the user is an admin
+            if user_data['role'] == 'admin':
+                user_response_data['admin'] = True
+                logger.info(f'Successful admin login for username: {username}')
+            else:
+                user_response_data['admin'] = False
+                logger.info(f'Successful user login for username: {username}')
+
+            return jsonify(user_response_data), 200
 
         except Exception as e:
             logger.error(f'Login error: {str(e)}')
